@@ -102,7 +102,7 @@ elif menu == "年度统计":
     year = st.selectbox("选择年份", [str(y) for y in range(2026,2030)])
     res_att = supabase.table("attendance").select("*").execute()
     if res_att.data:
-        df = pd.DataFrame()(res_att.data)
+        df = pd.DataFrame(res_att.data)
         df['date'] = pd.to_datetime(df['date'])
         
         df_filtered = df[df['date'].dt.year == year].copy()
@@ -122,6 +122,7 @@ elif menu == "年度统计":
             st.info(f"📅 {year}年暂无任何数据。")      
     else:
         st.info("数据库目前是空的，请去打卡！")                
+
 
 
 
