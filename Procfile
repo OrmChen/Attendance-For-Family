@@ -1,3 +1,4 @@
-web: streamlit run wapp.py
+web: streamlit run Wapp.py
 --server.port=$PORT
 --server.address=0.0.0.0
+
