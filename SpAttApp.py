@@ -17,7 +17,7 @@ key = st.secrets["SUPABASE_KEY"]
 supabase: Client = create_client(url, key)
 
 # UI
-st.set_page_cofig(page_title = "出勤管理", layout = 'centered')
+st.set_page_config(page_title = "出勤管理", layout = 'centered')
 st.markdown("""
     <style>
     /* 字体 */
@@ -119,6 +119,7 @@ elif menu == "年度统计":
             st.info(f"📅 {year}年暂无任何数据。")      
     else:
         st.info("数据库目前是空的，请去打卡！")                
+
 
 
 
