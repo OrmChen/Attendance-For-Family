@@ -47,7 +47,7 @@ if menu == "今日打卡":
     selected_date = st.date_input("选择日期", date.today())
     res_emp = supabase.table("employees").select("name").execute()
     if res_emp and hasattr(res_emp, 'data'):
-        employees = [row['name'] for row in res_emp.date]
+        employees = [row['name'] for row in res_emp.data]
     else:
         employees = []
         
@@ -86,15 +86,15 @@ elif menu == "员工管理":
             except:
                 st.error("此姓名已存在，请勿重复添加")
         
-        st.subheader("现有人员名单")
-        res_list = supabase.table("employees").select("*").execute()
-        for row in res_list.data:
-            col_name, col_del = st.columns([3, 1])
-            col_name.write(f"·{row['name']}")
-            if col_del.button("🚮 删除", key = f"del_{row['id']}"):
-                supabase.table("employees").delete().eq("id", row['id']).execute()
-                supabase.table("attendance").delete().eq("name", row['name']).execute()
-                st.rerun()
+    st.subheader("现有人员名单")
+    res_list = supabase.table("employees").select("*").execute()
+    for row in res_list.data:
+        col_name, col_del = st.columns([3, 1])
+        col_name.write(f"·{row['name']}")
+        if col_del.button("🚮 删除", key = f"del_{row['id']}"):
+            supabase.table("employees").delete().eq("id", row['id']).execute()
+            supabase.table("attendance").delete().eq("name", row['name']).execute()
+            st.rerun()
 
 # 3 年度统计
 elif menu == "年度统计":
@@ -122,6 +122,7 @@ elif menu == "年度统计":
             st.info(f"📅 {year}年暂无任何数据。")      
     else:
         st.info("数据库目前是空的，请去打卡！")                
+
 
 
 
