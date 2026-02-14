@@ -10,6 +10,28 @@ import sqlite3
 from datetime import date
 import pandas as pd
 
+st.markdown("""
+    <style>
+    # 字体
+    html, body,
+[class*="ViewContainer"]{
+        font-size: 20px;
+    }
+    # 标题
+    h1{
+        color: #ffb4b;
+        font-size: 40px !important;
+    }
+    .stButton>button{
+        width: 100%;
+        height: 3em;
+        font-size: 20px !important;
+    }
+    </style>
+    """, unsafe_allow_html=True
+)
+
+
 # 数据库连接
 conn = sqlite3.connect("data.db", check_same_thread=False)
 c = conn.cursor()
@@ -117,4 +139,5 @@ elif menu == "年度统计":
         st.subheader("详细记录")
         st.dataframe(df_year)
     else:
+
         st.info("暂无数据")
