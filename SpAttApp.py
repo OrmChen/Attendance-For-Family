@@ -44,7 +44,7 @@ menu = st.sidebar.selectbox("🏠 功能菜单", ["今日打卡", "员工管理"
 # 1 今日打卡
 if menu == "今日打卡":
     st.header("每日记录")
-    selected_date = st.date_imput("选择日期", date.today())
+    selected_date = st.date_input("选择日期", date.today())
     res_emp = supabase.table("employees").select("name").execute()
     employees = [row['name'] for row in res_emp.date]
     
@@ -119,6 +119,7 @@ elif menu == "年度统计":
             st.info(f"📅 {year}年暂无任何数据。")      
     else:
         st.info("数据库目前是空的，请去打卡！")                
+
 
 
 
