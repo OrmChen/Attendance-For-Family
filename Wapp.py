@@ -12,16 +12,17 @@ import pandas as pd
 
 st.markdown("""
     <style>
-    # 字体
+    /* 字体 */
     html, body,
 [class*="ViewContainer"]{
         font-size: 20px;
     }
-    # 标题
+    /* 标题 */
     h1{
         color: #ffb4b;
         font-size: 40px !important;
     }
+    
     .stButton>button{
         width: 100%;
         height: 3em;
@@ -141,3 +142,4 @@ elif menu == "年度统计":
     else:
 
         st.info("暂无数据")
+
