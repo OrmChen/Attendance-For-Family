@@ -22,15 +22,17 @@ st.markdown("""
     <style>
     /* 字体 */
     .stApp{ font-size: 20px;}
-    
+    /* 按键 */
     .stButton>button{ 
         width: 100%;
         height: 3em;
         font-size: 20px !important;
-        margin-top: 10px;}
+        margin-top: 10px;
+        color: red;
+    }
     /* 标题 */
     h1{
-        text_a;ogn: center;
+        text_align: center;
         color: #2E765E;
         font-size: 40px !important;
     }
@@ -38,7 +40,7 @@ st.markdown("""
     """, unsafe_allow_html=True
 )
 
-st.title("🍎 出勤记录")
+st.markdown('<p class="main-title">🍎 出勤记录</p>', unsafe_allow_html=True)
 
 menu = st.sidebar.selectbox("🏠 功能菜单", ["今日打卡", "员工管理", "年度统计"])
 # 1 今日打卡
@@ -98,30 +100,35 @@ elif menu == "员工管理":
 
 # 3 年度统计
 elif menu == "年度统计":
-    st.header("年度数据")
+    st.header("汇总报表")
     year = st.selectbox("选择年份", [str(y) for y in range(2026,2030)])
     res_att = supabase.table("attendance").select("*").execute()
     if res_att.data:
         df = pd.DataFrame(res_att.data)
         df['date'] = pd.to_datetime(df['date'])
         
-        df_filtered = df[df['date'].dt.year == year].copy()
+        df_filtered = df[df['date'].dt.year == int(year)].copy()
         if not df_filtered.empty:
-            summary = df_filtered.groupby("name")["work"].sum().reset_index()
+            summary = df_filtered.groupby("name")["work"].sum().reset_index(name="出勤天数")
             summary.columns = ["姓名", "累计出勤（天）"]
+            st.subheader("年度记录")
+            st.write(summary)
+            
+            st.subheader("详细记录")
             df_display = df_filtered.rename(columns={
                 "name": "姓名",
                 "date": "日期",
-                "work": "是否出勤",
+                "work": "状态",
                 "note": "备注"})
-            df_display["日期"].dt.strftime('%Y-%m-%d')
-
+            df_display["日期"] = df_display["日期"].dt.strftime('%Y-%m-%d')
+            df_display["状态"] = df_display["状态"].apply(lambda x: "上班" if x == 1 else "不上班"
             st.dataframe(df_display[["姓名", "日期", "是否出勤", "备注"]], use_container_width=
                          True, hide_index = True)
         else:
             st.info(f"📅 {year}年暂无任何数据。")      
     else:
         st.info("数据库目前是空的，请去打卡！")                
+
 
 
 
