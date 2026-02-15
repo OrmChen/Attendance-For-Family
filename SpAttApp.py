@@ -121,13 +121,14 @@ elif menu == "年度统计":
                 "work": "状态",
                 "note": "备注"})
             df_display["日期"] = df_display["日期"].dt.strftime('%Y-%m-%d')
-            df_display["状态"] = df_display["状态"].apply(lambda x: "上班" if x == 1 else "不上班"
-            st.dataframe(df_display[["姓名", "日期", "是否出勤", "备注"]], use_container_width=
+            df_display["状态"] = df_display["状态"].apply(lambda x: "上班" if x == 1 else "不上班")
+            st.dataframe(df_display[["姓名", "日期", "状态", "备注"]], use_container_width=
                          True, hide_index = True)
         else:
             st.info(f"📅 {year}年暂无任何数据。")      
     else:
         st.info("数据库目前是空的，请去打卡！")                
+
 
 
 
