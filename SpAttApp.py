@@ -106,7 +106,7 @@ elif menu == "年度统计":
         df['date'] = pd.to_datetime(df['date'])
         
         df_filtered = df[df['date'].dt.year == year].copy()
-        if not df_filtered.empty():
+        if not df_filtered.empty:
             summary = df_filtered.groupby("name")["work"].sum().reset_index()
             summary.columns = ["姓名", "累计出勤（天）"]
             df_display = df_filtered.rename(columns={
@@ -122,6 +122,7 @@ elif menu == "年度统计":
             st.info(f"📅 {year}年暂无任何数据。")      
     else:
         st.info("数据库目前是空的，请去打卡！")                
+
 
 
 
