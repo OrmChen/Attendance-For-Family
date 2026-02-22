@@ -101,7 +101,7 @@ elif menu == "员工管理":
 # 3 年度统计
 elif menu == "年度统计":
     st.header("汇总报表")
-    year = st.selectbox("选择年份", [str(y) for y in range(2025,2030)])
+    year = st.selectbox("选择年份", [str(y) for y in range(2026,2030)])
     res_att = supabase.table("attendance").select("*").execute()
     if res_att.data:
         df = pd.DataFrame(res_att.data)
@@ -128,6 +128,7 @@ elif menu == "年度统计":
             st.info(f"📅 {year}年暂无任何数据。")      
     else:
         st.info("数据库目前是空的，请去打卡！")                
+
 
 
 
